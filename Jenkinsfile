@@ -18,7 +18,7 @@ pipeline {
                     // Send the file using HTTP PUT
                     sh """
                     curl -X PUT --data-binary "@${filePath}" ${targetUrl}
-                    '''
+                    """
                 }
             }
         }
