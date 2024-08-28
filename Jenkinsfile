@@ -2,63 +2,22 @@ pipeline {
     agent any
 
     stages {
-        stage('Initial Setup') {
-            steps {
-                echo 'Starting the build process...'
-                // Add your initial setup steps here
-            }
-        }
-
-        stage('Fetch Artifact') {
-            steps {
-                echo 'Fetching the artifact from the repository...'
-                // Simulate artifact fetching
-                sh 'echo "Fetching artifact..."'
-            }
-        }
-
         stage('Build') {
             steps {
-                echo 'Building the project...'
-                // Simulate build process
-                sh 'echo "Building the project..."'
+                // Your build steps here
+                sh 'echo Build is prepared and placed at '
             }
         }
-
-        stage('Test') {
-            steps {
-                echo 'Running tests...'
-                // Simulate running tests
-                sh 'echo "Running tests..."'
-            }
-        }
-
         stage('Deploy') {
             steps {
-                echo 'Deploying the project...'
-                // Simulate deployment
-                sh 'echo "Deploying the project..."'
+                script {
+                    // Example for SCP (Secure Copy Protocol)
+                    sh '''
+                    scp -i /path/to/ssh-key -o StrictHostKeyChecking=no \
+                       /home/ajaytest/Downloads/bzImage-initramfs--6.1-r0-dell-qemux86_64-20240312151614.bin root@100.105.243.57:/home/root/
+                    '''
+                }
             }
-        }
-
-        stage('Cleanup') {
-            steps {
-                echo 'Cleaning up workspace...'
-                // Simulate cleanup
-                sh 'echo "Cleaning up workspace..."'
-            }
-        }
-    }
-
-    post {
-        always {
-            echo 'This will always run after the stages.'
-        }
-        success {
-            echo 'This will run only if the pipeline succeeds.'
-        }
-        failure {
-            echo 'This will run only if the pipeline fails.'
         }
     }
 }
