@@ -13,7 +13,7 @@ pipeline {
             steps {
                 script {
                     def filePath = '/home/ajaytest/Downloads/*.bin'
-                    def targetUrl = 'http://100.105.243.57:8080/home/root'
+                    def targetUrl = 'http://100.105.243.57:8080/upload'
                     
                     // Send the file using HTTP PUT
                     sh """
