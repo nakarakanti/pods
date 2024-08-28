@@ -5,8 +5,8 @@ pipeline {
         stage('Build') {
             steps {
                 // Your build steps here
-                sh 'cd $Build_path
-                ls *.bin |echo "Build is prepared and placed at $PWD"'
+                sh '''cd $Build_path
+                ls *.bin |echo "Build is prepared and placed at $PWD"'''
             }
         }
         stage('Deploy') {
