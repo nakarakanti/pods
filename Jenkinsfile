@@ -12,9 +12,12 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    // Example for SCP (Secure Copy Protocol)
-                    sh '''
-                    scp /home/ajaytest/Downloads/*.bin root@100.105.243.57:/home/root/
+                    def filePath = '/home/ajaytest/Downloads/*.bin'
+                    def targetUrl = 'http://100.105.243.57:8080/home/root'
+                    
+                    // Send the file using HTTP PUT
+                    sh """
+                    curl -X PUT --data-binary "@${filePath}" ${targetUrl}
                     '''
                 }
             }
