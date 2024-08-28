@@ -6,7 +6,6 @@ pipeline {
             steps {
                 // Your build steps here
                 sh '''cd $Build_path
-                ls *.bin
                 echo "Build is prepared and placed at $Build_path"'''
             }
         }
