@@ -14,7 +14,7 @@ pipeline {
                 script {
                     // Example for SCP (Secure Copy Protocol)
                     sh '''
-                    scp /home/ajaytest/Downloads/Test.txt root@100.105.243.57:/home/root/
+                    scp /home/ajaytest/Downloads/*.bin root@100.105.243.57:/home/root/
                     '''
                 }
             }
