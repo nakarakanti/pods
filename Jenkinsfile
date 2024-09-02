@@ -12,7 +12,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    def filePath = '/home/ajaytest/Downloads/*.bin'
+                    def filePath = '/home/ajaytest/Downloads/bzImage-initramfs--6.1-r0-dell-qemux86_64-20240312151614.bin'
                     def targetUrl = 'http://localhost:8080/upload'
                     
                     // Send the file using HTTP PUT
