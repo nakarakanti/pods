@@ -13,11 +13,14 @@ pipeline {
             steps {
                 script {
                     def filePath = '/home/ajaytest/Downloads/bzImage-initramfs--6.1-r0-dell-qemux86_64-20240312151614.bin'
-                    def targetUrl = 'http://localhost:8080/upload'
+                    def targetUrl = 'http://localhost/upload'
                     
                     // Send the file using HTTP PUT
                     sh """
-                    curl -X PUT --data-binary "@${filePath}" ${targetUrl}
+                    curl -X POST http://localhost/upload_endpoint \
+                     -H "Authorization: Bearer your_token" \
+                     -F "file=@/home/ajaytest/Downloads/bzImage-initramfs--6.1-r0-dell-qemux86_64-20240312151614.bin"
+
                     """
                 }
             }
