@@ -17,7 +17,7 @@ pipeline {
                     
                     // Send the file using HTTP PUT
                     sh """
-                    curl -X POST http://localhost/upload_endpoint \
+                    curl -X POST http://localhost:8081/upload \
                      -H "Authorization: Bearer your_token" \
                      -F "file=@/home/ajaytest/Downloads/bzImage-initramfs--6.1-r0-dell-qemux86_64-20240312151614.bin"
 
