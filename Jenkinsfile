@@ -2,43 +2,29 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout SCM') {
+        stage('Build') {
             steps {
-                // Checkout code from SCM
-                checkout scm
+                // Your build steps here
+                sh '''cd $Build_path
+                echo "Build is prepared and placed at $Build_path"'''
             }
         }
-        
-        stage('Send File to HTTP Server') {
+        stage('Deploy') {
             steps {
                 script {
-                    // Path to the file you want to send
                     def filePath = '/home/ajay-test/server.c'
-                    def httpServerUrl = 'http://localhost:8080/your-endpoint'
+                    def targetUrl = 'http://localhost/upload'
 
-                    // Read file content
-                    def fileContent = readFile(filePath)
+                    // Send the file using HTTP PUT
+                    sh """
+                    curl -X POST http://localhost:8081/upload \
+                     -H "Authorization: Bearer your_token" \
+                     -F "file=@/home/ajaytest/Downloads/bzImage-initramfs--6.1-r0-dell-qemux86_64-20240312151614.bin"
 
-                    // Send file content to HTTP server
-                    def response = httpRequest(
-                        acceptType: 'APPLICATION_JSON',
-                        contentType: 'APPLICATION_JSON',
-                        httpMode: 'POST',
-                        url: httpServerUrl,
-                        requestBody: fileContent
-                    )
-
-                    // Print response for debugging
-                    echo "Response: ${response}"
+                    """
                 }
             }
         }
     }
-    
-    post {
-        always {
-            // Clean up workspace
-            deleteDir()
-        }
-    }
 }
+~       
