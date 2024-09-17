@@ -19,7 +19,7 @@ pipeline {
                     sh """
                     curl -X POST http://localhost:8081/upload \
                      -H "Authorization: Bearer your_token" \
-                     -F "file=@/home/ajaytest/Downloads/bzImage-initramfs--6.1-r0-dell-qemux86_64-20240312151614.bin"
+                     -F "file=@/home/ajay-test/server.c"
 
                     """
                 }
