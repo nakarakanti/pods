@@ -45,9 +45,27 @@ pipeline {
     }
     
     post {
-        always {
-            // Clean up workspace
-            deleteDir()
+        success {
+            script {
+                // Send email notification upon successful completion
+                emailext(
+                    to: 'ajay.nakarakanti@dellteam.com',
+                    subject: "Jenkins Build Successful: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                    body: "The build ${env.JOB_NAME} #${env.BUILD_NUMBER} has been successful. The file has been uploaded to the HTTP server.",
+                    attachLog: true
+                )
+            }
+        }
+        failure {
+            script {
+                // Optional: Send email notification upon failure
+                emailext(
+                    to: 'ajay.nakarakanti@dellteam',
+                    subject: "Jenkins Build Failed: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                    body: "The build ${env.JOB_NAME} #${env.BUILD_NUMBER} has failed. Please check the build log for details.",
+                    attachLog: true
+                )
+            }
         }
     }
 }
