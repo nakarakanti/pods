@@ -21,7 +21,7 @@ pipeline {
                     try {
                         // Path to the file you want to send
                         def filePath = '/home/ajay-test/server.c'
-                        def httpServerUrl = 'http://localhost:8080/home/ajay-test/new'
+                        def httpServerUrl = 'http://localhost:8081/home/ajay-test/http/server'
 
                         // Check if file exists
                         if (fileExists(filePath)) {
