@@ -4,32 +4,41 @@ pipeline {
     stages {
         stage('Checkout SCM') {
             steps {
-                // Checkout code from SCM
-                checkout scm
+                script {
+                    try {
+                        // Checkout code from SCM
+                        checkout scm
+                    } catch (Exception e) {
+                        error "Failed to checkout SCM: ${e.getMessage()}"
+                    }
+                }
             }
         }
         
         stage('Send File to HTTP Server') {
             steps {
                 script {
-                    // Path to the file you want to send
-                    def filePath = '/home/ajay-test/server.c'
-                    def httpServerUrl = 'http://localhost:8080/your-endpoint'
+                    try {
+                        // Path to the file you want to send
+                        def filePath = '/home/ajay-test/server.c'
+                        def httpServerUrl = 'http://localhost:8080/your-endpoint'
 
-                    // Read file content
-                    def fileContent = readFile(filePath)
-
-                    // Send file content to HTTP server
-                    def response = httpRequest(
-                        acceptType: 'APPLICATION_JSON',
-                        contentType: 'APPLICATION_JSON',
-                        httpMode: 'POST',
-                        url: httpServerUrl,
-                        requestBody: fileContent
-                    )
-
-                    // Print response for debugging
-                    echo "Response: ${response}"
+                        // Check if file exists
+                        if (fileExists(filePath)) {
+                            // Use curl to send the file to the HTTP server
+                            def curlCommand = "curl -X POST ${httpServerUrl} -H 'Content-Type: application/json' --data-binary @${filePath}"
+                            
+                            // Execute the curl command
+                            def response = sh(script: curlCommand, returnStdout: true).trim()
+                            
+                            // Print response for debugging
+                            echo "Response: ${response}"
+                        } else {
+                            error "File does not exist: ${filePath}"
+                        }
+                    } catch (Exception e) {
+                        error "Failed to send file to HTTP server: ${e.getMessage()}"
+                    }
                 }
             }
         }
