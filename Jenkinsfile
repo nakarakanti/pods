@@ -21,12 +21,12 @@ pipeline {
                     try {
                         // Path to the file you want to send
                         def filePath = '/home/ajay-test/server.c'
-                        def httpServerUrl = 'http://localhost:8081/home/ajay-test/http/'
+                        def httpServerUrl = 'http://localhost:8081/home/ajay-test/http/' // Adjusted URL
 
                         // Check if file exists
                         if (fileExists(filePath)) {
                             // Use curl to send the file to the HTTP server
-                            def curlCommand = "curl -X POST ${httpServerUrl} -H 'Content-Type: application/json' --data-binary @${filePath}"
+                            def curlCommand = "curl -X POST ${httpServerUrl} -F 'file=@${filePath}'"
                             
                             // Execute the curl command
                             def response = sh(script: curlCommand, returnStdout: true).trim()
@@ -60,7 +60,7 @@ pipeline {
             script {
                 // Optional: Send email notification upon failure
                 emailext(
-                    to: 'ajay.nakarakanti@dellteam',
+                    to: 'ajay.nakarakanti@dellteam.com',
                     subject: "Jenkins Build Failed: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                     body: "The build ${env.JOB_NAME} #${env.BUILD_NUMBER} has failed. Please check the build log for details.",
                     attachLog: true
