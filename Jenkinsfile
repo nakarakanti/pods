@@ -25,9 +25,9 @@ pipeline {
 
                         // Check if file exists
                         if (fileExists(filePath)) {
+                            curl -X POST -F "file=@/home/ajay-test/server.c" http://localhost:8081/home/ajay-test/http/
                             // Use curl to send the file to the HTTP server
                             //def curlCommand = "curl -X POST ${httpServerUrl} -H 'Content-Type: application/json' --data-binary @${filePath}"
-                            curl -X POST -F "file=@/home/ajay-test/server.c" http://localhost:8081/home/ajay-test/http/
                             
                             // Execute the curl command
                             def response = sh(script: curlCommand, returnStdout: true).trim()
